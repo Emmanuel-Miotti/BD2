@@ -65,14 +65,14 @@ CREATE TABLE Compras(item_id CHARACTER(10),
 -- a. Eliminar el campo prov_otros de la tabla Proveedores
  alter table Proveedores drop column prov_otros;
 
---b. Agregar el tipo de categoría ‘Cocina’ a la tabla Categorías
+--b. Agregar el tipo de categorÃ­a â€˜Cocinaâ€™ a la tabla CategorÃ­as
  alter table Categorias DROP CONSTRAINT CK_TipCat; 
  alter table Categorias ADD CONSTRAINT CK_TipCat CHECK(cat_tipo IN ('Elect','Vehic','Electrod','Otros', 'Cocina'))
 
---c. Cambiar el tamaño de la descripción de marcas y llevarlo a 50 caracteres
+--c. Cambiar el tamaÃ±o de la descripciÃ³n de marcas y llevarlo a 50 caracteres
  alter table Marcas alter column marca_descrip varchar(50); 
 
---d. En la tabla Items agregar el campo color de 10 caracteres y el campo peso de números con decimales.
+--d. En la tabla Items agregar el campo color de 10 caracteres y el campo peso de nÃºmeros con decimales.
 alter table Items ADD color character(10), peso decimal(10,2);
 
 
@@ -81,7 +81,7 @@ alter table Compras alter column fch_inic datetime;
 
 alter table Compras alter column fch_fin datetime;
 
---f. Crear la tabla Paises que tenga un código de país de 4 caracteres que lo identifica, una descripción de 40
+--f. Crear la tabla Paises que tenga un cÃ³digo de paÃ­s de 4 caracteres que lo identifica, una descripciÃ³n de 40
 --caracteres y un nombre de continente de 30 caracateres.
 
 CREATE TABLE Paises(
@@ -92,8 +92,8 @@ CREATE TABLE Paises(
 )
 
 
---g. Modificar la tabla Proveedores para que también se registre el país del proveedor, se debe crear la
---restricción correspondiente.
+--g. Modificar la tabla Proveedores para que tambiÃ©n se registre el paÃ­s del proveedor, se debe crear la
+--restricciÃ³n correspondiente.
  alter table Proveedores add cod_pais character(4);
  alter table Proveedores add CONSTRAINT FK_CcodPais FOREIGN KEY(cod_pais) REFERENCES Paises(cod_pais),
 
