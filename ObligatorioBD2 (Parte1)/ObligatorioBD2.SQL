@@ -3,10 +3,10 @@ CREATE DATABASE ObligatorioBD2;
 USE ObligatorioBD2;
 
 /*
-Se lleva registros de los PaÌses y Cuidades que realizan competiciones. Para los paÌses se quiere 
-registrar CÛdigo y nombre datos que deben respetar la norma ìISO 3166-1 alfa-3î
-Para las ciudades se debe tener el paÌs a la que pertenece y el nombre de la ciudad. Tener en cuenta
-que existen ciudades con igual nombre en distintos paÌses
+Se lleva registros de los Pa√≠ses y Cuidades que realizan competiciones. Para los pa√≠ses se quiere 
+registrar C√≥digo y nombre datos que deben respetar la norma ‚ÄúISO 3166-1 alfa-3‚Äù
+Para las ciudades se debe tener el pa√≠s a la que pertenece y el nombre de la ciudad. Tener en cuenta
+que existen ciudades con igual nombre en distintos pa√≠ses
 */
 Create table Pais (
 
@@ -27,49 +27,49 @@ Create table Ciudad (
 	constraint FK_CodigoPais foreign key (codigoPais) references Pais(codigoPais)
 )
 /*
-Sobre las Competencias se sabe que tienen un nombre que las identifica, un aÒo en la que realizo, y 
-el paÌs que fue anfitriÛn de la misma.
+Sobre las Competencias se sabe que tienen un nombre que las identifica, un a√±o en la que realizo, y 
+el pa√≠s que fue anfitri√≥n de la misma.
 */
 Create table Competencia (
 
-	nombreCompetencia varchar(20),
-	anioRealizo date, --aÒo en la que realizo FALTA
-	codigoPais int,
+	nombreCompetencia varchar(20)not null,
+	anioRealizo date not null, --a√±o en la que realizo FALTA
+	codigoPais int not null,
 
 	constraint PK_Competencia primary key (nombreCompetencia),
 	constraint FK_Codigo_Pais_Competencia foreign key (codigoPais) references Pais(codigoPais),
 )
 /*
-En cada competencia se presentan Federaciones de distintos PaÌses. Las federaciones est·n
-formadas por los participantes que la integran, se identifican por un nombre, y se registra el paÌs al 
-que representan. Adem·s, las Federaciones llevan registro de la cantidad de dÌas que les llevo la
-preparaciÛn de cada participante para cada competencia, asÌ como un importe estimado del costo de 
-la preparaciÛn del participante
+En cada competencia se presentan Federaciones de distintos Pa√≠ses. Las federaciones est√°n
+formadas por los participantes que la integran, se identifican por un nombre, y se registra el pa√≠s al 
+que representan. Adem√°s, las Federaciones llevan registro de la cantidad de d√≠as que les llevo la
+preparaci√≥n de cada participante para cada competencia, as√≠ como un importe estimado del costo de 
+la preparaci√≥n del participante
 */
 Create table Federacion (
 
-	nombreFederacion varchar(30),
-	cantidadDias int,
-	costo decimal,
-	codigoPais int,
+	nombreFederacion varchar(30) not null,
+	cantidadDias int not null,
+	costo decimal not null,
+	codigoPais int not null,
 
 	constraint PK_Federacion primary key (nombreFederacion),
 	constraint FK_Codigo_Pais_Federacion foreign key (codigoPais) references Pais(codigoPais)
 
 )
 /*
-De los participantes se sabe que tienen un pasaporte que los identifica (3 letras y 6 dÌgitos), y se sabe 
-el nombre, paÌs de origen (nacionalidad), sexo, fecha de nacimiento. Los participantes solo pueden 
-competir como representante de su paÌs
+De los participantes se sabe que tienen un pasaporte que los identifica (3 letras y 6 d√≠gitos), y se sabe 
+el nombre, pa√≠s de origen (nacionalidad), sexo, fecha de nacimiento. Los participantes solo pueden 
+competir como representante de su pa√≠s
 */
 
 Create table Participante (
 
-	pasaporte varchar(9), --pasaporte que los identifica (3 letras y 6 dÌgitos)
-	nombre varchar(20),
-	sexo character(2) CHECK (sexo IN ('H','M','IN')),
-	fechaNacimiento date,
-	codigoPais int foreign key (codigoPais) references Pais(codigoPais),
+	pasaporte varchar(9) not null, --pasaporte que los identifica (3 letras y 6 d√≠gitos)
+	nombre varchar(20) not null,
+	sexo character(2) not null CHECK (sexo IN ('H','M','IN')),
+	fechaNacimiento date not null,
+	codigoPais int not null foreign key (codigoPais) references Pais(codigoPais),
 
 	constraint PK_Participante primary key (pasaporte),
 	--constraint UK_codigoPais UNIQUE codigoPais,
@@ -79,21 +79,21 @@ Create table Participante (
 )
 /*
 Finalmente se necesita registrar los datos de las Pruebas de las Competencia. Las pruebas se 
-identifican por un autonumÈrico y se sabe: el dÌa, la hora de inicio, la hora de fin, la ciudad donde se 
-realizÛ, el tipo de prueba (disciplina), los participantes que compitieron, y los resultados. Las pruebas 
-son individuales (no por equipos) y se registra esta informaciÛn una vez que termino cada Prueba, es 
+identifican por un autonum√©rico y se sabe: el d√≠a, la hora de inicio, la hora de fin, la ciudad donde se 
+realiz√≥, el tipo de prueba (disciplina), los participantes que compitieron, y los resultados. Las pruebas 
+son individuales (no por equipos) y se registra esta informaci√≥n una vez que termino cada Prueba, es 
 decir se conocen todos los datos
 */
 Create table Prueba (
 
-	idPrueba int, --FALTA identifican por un autonumÈrico 
-	dia date,
-	horaInicio time, --time,'12:05:06.0000000'
-	horaFin time,
-	disciplina varchar(20),
-	nombreCiudad varchar(20),
-	participante varchar(10),
-	resultado int,
+	idPrueba int not null, --FALTA identifican por un autonum√©rico 
+	dia date not null,
+	horaInicio time not null, --time,'12:05:06.0000000'
+	horaFin time not null, 
+	disciplina varchar(20) not null,
+	nombreCiudad varchar(20) not null,
+	participante varchar(10) not null,
+	resultado int, --????Falta
 
 	constraint PK_Prueba primary key (idPrueba),
 	constraint FK_Nombre_Ciudad foreign key (nombreCiudad) references Ciudad(nombreCiudad),
@@ -126,9 +126,9 @@ VALUES ('Montevideo', 1),
 INSERT INTO Competencia VALUES
 ('Atletismo',YEAR(2022),1),
 ('Ciclismo',YEAR(2022),2),
-('NataciÛn',YEAR(2022),3),
+('Nataci√≥n',YEAR(2022),3),
 ('Remo',YEAR(2022),1),
-('TriatlÛn',YEAR(2022),2),
+('Triatl√≥n',YEAR(2022),2),
 ('Vela',YEAR(2022),3),
 ('Rugby',YEAR(2022),4),
 ('Voleibol',YEAR(2022),2),
